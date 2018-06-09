@@ -3,14 +3,14 @@
 #________________________________
 # Control variables
 
-repository_url= ''
+repository_url= 'https://github.com/galaxycloud-elixir-IT/HEAT-templates/tree/master/build_system'
 
 ansible_venv=/tmp/myansible
 ANSIBLE_VERSION=2.2.1
 
-OS_BRANCH='devel'
-BRANCH='devel'
-FASTCONFIG_BRANCH='devel'
+OS_BRANCH='master'
+BRANCH='master'
+FASTCONFIG_BRANCH='master'
 TOOLS_BRANCH='master'
 TOOLDEPS_BRANCH='master'
 REFDATA_BRANCH='master'
@@ -249,7 +249,8 @@ function start_services(){
 # Run playbook
 function run_playbook(){
 
-  wget https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/$action/$galaxy_flavor.yml -O /tmp/playbook.yml
+  wget $repository_url/$action/$galaxy_flavor.yml -O /tmp/playbook.yml
+  
   cd $ansible_venv
   ansible-playbook /tmp/playbook.yml
 
