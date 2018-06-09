@@ -1,0 +1,136 @@
+heat_template_version: 2014-10-16
+
+description: >
+  This template deploy a CernVM-FS Stratum Zero server
+
+
+##################################
+parameters:
+  key_name:
+    type: string
+    description: Name of a KeyPair
+    default: ROBOT
+  vm_name:
+    type: string
+    label: VM name
+    default: galaxy-ws
+  image_id:
+    type: string
+    label: Image ID
+    description: "CentOS 7.4"
+    default: fb342843-d016-43f0-bb3a-7f9e5ec4011c
+  instance_type:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+    default: small
+  availability_zone:
+    type: string
+    description: The Availability Zone to launch the instance.
+    default: nova
+  net_id:
+    type: string
+    description: ID of public sub network into which servers get deployed
+    default: fe82ef7b-4bb7-4c1e-b4ec-ec5c1b0c7333
+
+  volume_size:
+    type: number
+    description: Size of the volume to be created.
+    default: 1
+  volume_mountpoint:
+    type: string
+    description: The directory to provide to the user
+    default: /export
+
+  action:
+    type: string
+    description: RUN or BUILD flavor
+    default: RUN
+  flavor:
+    type: string
+    description: install full galaxy flavor (base_image and run_tools_script are also possible values)
+    default: galaxy-no-tools
+  tools_recipe_url:
+    type: string
+    description: url to yaml recipe to install script
+    default: 'https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/tools.yml'
+
+
+resources:
+
+  #__________________________________
+  # server deployment
+  galaxy_server:
+    type: OS::Nova::Server
+    properties:
+      name: { get_param: vm_name }
+      key_name: { get_param: key_name }
+      image: { get_param: image_id }
+      availability_zone: { get_param: availability_zone }
+      flavor: { get_param: instance_type }
+      networks:
+        - network: { get_param: net_id }
+      security_groups: [ { get_resource: server_security_group } ]
+      user_data:
+        str_replace:
+          template: { get_file: setup.sh }
+          params:
+            $volume_mountpoint: { get_param: volume_mountpoint }
+            $volume_id: { get_resource: cinder_volume }
+            $action: { get_param: action }
+            $galaxy_flavor: { get_param: flavor }
+            $tools_recipe_url: { get_param: tools_recipe_url }
+      user_data_format: RAW
+
+  #__________________________________
+  # External volume
+  cinder_volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: { get_param: volume_size }
+      availability_zone: { get_param: availability_zone }
+  
+  volume_attachment:
+    type: OS::Cinder::VolumeAttachment 
+    properties:
+      volume_id: { get_resource: cinder_volume }
+      instance_uuid: { get_resource: galaxy_server }
+      mountpoint: null
+
+  #__________________________________
+  # Security group  
+  server_security_group:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: Add security group rules for server
+      name: security-group
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 22
+          port_range_max: 22
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: icmp
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 21
+          port_range_max: 21
+        - remote_ip_prefix: 0.0.0.0/0
+          protocol: tcp
+          port_range_min: 80
+          port_range_max: 80
+
+##################################
+outputs:
+  vmIp:
+    description: The IP address of the deployed instance
+    value: { get_attr: [galaxy_server, first_address] }
+  vmUuid:
+    description: Resource ID assigned to the newly created instance
+    value: { get_resource: galaxy_server }
+  vmName:
+    description: vm name 
+    value: { get_param: vm_name }
+  volumeUuid:
+    description: Resource ID assigned to the newly created volume attached to instance
+    value: { get_resource: cinder_volume }

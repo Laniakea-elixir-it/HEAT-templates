@@ -1,0 +1,56 @@
+---
+- name: Apply Galaxy Role
+  hosts: localhost
+  connection: local
+  become_user: root
+  become: true
+  roles:
+    - role: indigo-dc.galaxycloud-os
+      os_storage: 'IaaS'
+      GALAXY_ADMIN_EMAIL: 'ma.tangaro@gmail.com'
+      userdata_provider: 'oneprovider-test.cloud.ba.infn.it'
+      userdata_token: 'MDAxNWxvY2F00aW9uIG9uZXpvbmUKMDAzYmlkZW500aWZpZXIgdWRJMGlndXgtMXlsUExsRlp3RV9QUTlQSWlBUGlOMnloRS1BajRiUlJidwowMDFhY2lkIHRpbWUgPCAxNTM2NjQ4Nzk2CjAwMmZzaWduYXR1cmUgloMSlNiVepWnNb5tHT2qbFihs1s57X00HmM01mB01cxSJkK'
+      userdata_space: 'galaxy'
+      galaxy_instance_key_pub: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDy787GZIVdHW7QV+Wu2q9q5k5CiTOq04ENioVig88IIVGNqi8qiX+3fhZx/w2hhlz6AePrYu8CfVPplCRdSMjP46av53V1M7r0+yqJvuk1PC2f/rSoEL95TvaeiV28+5Wy4MC58UvYuewuhIHcbfPiXHf3NEE3scd38GXCYKLhAP28mUQ950Ar4SoWv4irv21maJwkwqn5AYXcy1yrbBZtaTbQELVPa/E6X9j+k29bn32ITmmtKBA3ne/QlFRaaYI3XggvMXhhSSIYsJUdlSOjUTriB2DraHsxMGfOPjmPXkjvrXp9MfOzjMg10fb7K2Mda8u/ujK/dvx3BnhlSIpn marco@marco-Latitude-3440"
+
+    - role: indigo-dc.galaxycloud
+      GALAXY_ADMIN_EMAIL: "ma.tangaro@gmail.com"
+      GALAXY_ADMIN_USERNAME: "mtangaro" 
+      GALAXY_VERSION: "release_17.09"
+      galaxy_instance_key_pub: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDy787GZIVdHW7QV+Wu2q9q5k5CiTOq04ENioVig88IIVGNqi8qiX+3fhZx/w2hhlz6AePrYu8CfVPplCRdSMjP46av53V1M7r0+yqJvuk1PC2f/rSoEL95TvaeiV28+5Wy4MC58UvYuewuhIHcbfPiXHf3NEE3scd38GXCYKLhAP28mUQ950Ar4SoWv4irv21maJwkwqn5AYXcy1yrbBZtaTbQELVPa/E6X9j+k29bn32ITmmtKBA3ne/QlFRaaYI3XggvMXhhSSIYsJUdlSOjUTriB2DraHsxMGfOPjmPXkjvrXp9MfOzjMg10fb7K2Mda8u/ujK/dvx3BnhlSIpn marco@marco-Latitude-3440"
+#      set_pgsql_random_password: false
+#      init_type: "init"
+
+- name: Install tools
+  hosts: localhost
+  connection: local
+  roles:
+    - role: indigo-dc.galaxycloud-tools
+      galaxy_flavor: 'galaxy-testing'
+      Galaxy_flavor_recipe_branch: 'master'
+      when: galaxy_flavor != 'galaxy-no-tools'
+
+    - role: indigo-dc.galaxycloud-tooldeps
+
+
+- name: Download reference data
+  hosts: localhost
+  connection: local
+  pre_tasks:
+    - name: Get refdata-list
+      get_url:
+        url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/elixir-italy.galaxy.refdata.pub'
+        dest: '/tmp'
+  roles:
+    - role: indigo-dc.galaxycloud-refdata
+      get_refdata: 'true'
+      refdata_dir: '/refdata'
+      refdata_repository_name: 'elixir-italy.galaxy.refdata'
+      refdata_provider_type: 'cvmfs'
+      refdata_provider: 'provider_name'
+      refdata_token: 'access_token'
+      refdata_cvmfs_server_url: '90.147.102.186'
+      refdata_cvmfs_repository_name: 'elixir-italy.galaxy.refdata'
+      refdata_cvmfs_key_file: 'elixir-italy.galaxy.refdata.pub'
+      refdata_cvmfs_proxy_url: 'DIRECT'
+      #refdata_cvmfs_proxy_port 80
