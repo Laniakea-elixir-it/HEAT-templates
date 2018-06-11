@@ -3,13 +3,13 @@
 #________________________________
 # Control variables
 
-repository_url= 'https://github.com/galaxycloud-elixir-IT/HEAT-templates/tree/master/build_system'
+repository_url= 'https://raw.githubusercontent.com/galaxycloud-elixir-IT/HEAT-templates/master/build_system'
 
 ansible_venv=/tmp/myansible
 ANSIBLE_VERSION=2.2.1
 
 OS_BRANCH='master'
-BRANCH='master'
+BRANCH='devel'
 FASTCONFIG_BRANCH='master'
 TOOLS_BRANCH='master'
 TOOLDEPS_BRANCH='master'
@@ -353,7 +353,7 @@ function run_tools_script() {
   galaxy_custom_script_path=/usr/local/bin
 
   # Get install script
-  wget https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/install_tools.sh -O $galaxy_custom_script_path/install-tools
+  wget $repository_url/install_tools.sh -O $galaxy_custom_script_path/install-tools
   chmod +x $galaxy_custom_script_path/install-tools
 
   # Get recipe
@@ -400,8 +400,7 @@ function clean_package_manager_cache(){
 # Copy remove cloud-init artifact and user  script
 # Run this script after setup finished
 function copy_clean_instance_script(){
-
-  wget https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/clean_instance.sh -O /tmp/clean_instance.sh
+  wget $repository_url/clean_instance.sh -O /tmp/clean_instance.sh
   chmod +x /tmp/clean_instance.sh
 }
 
