@@ -249,7 +249,7 @@ function start_services(){
 # Run playbook
 function run_playbook(){
 
-  wget ${repository_url}/${action}/${galaxy_flavor}.yml -O /tmp/playbook.yml
+  wget ${repository_url}/$action/$galaxy_flavor.yml -O /tmp/playbook.yml
   
   cd $ansible_venv
   ansible-playbook /tmp/playbook.yml
