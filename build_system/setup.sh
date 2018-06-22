@@ -3,7 +3,7 @@
 #________________________________
 # Control variables
 
-repository_url='https://raw.githubusercontent.com/galaxycloud-elixir-IT/HEAT-templates/master/build_system'
+repository_url='https://raw.githubusercontent.com/Laniakea-elixir-it/HEAT-templates/master/build_system'
 
 ansible_venv=/tmp/myansible
 ANSIBLE_VERSION=2.2.1
