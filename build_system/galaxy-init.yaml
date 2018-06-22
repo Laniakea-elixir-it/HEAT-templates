@@ -9,24 +9,26 @@ resources:
     properties:
       key_name: mtangaro-key
       vm_name: galaxy_server
-      image_id: 8d2e8be7-6cfb-4699-b8ae-e774c8c0062e # ubuntu 16.04 (HEAT)
+      #image_id: 8d2e8be7-6cfb-4699-b8ae-e774c8c0062e # ubuntu 16.04 (HEAT)
       #image_id: 303d8324-69a7-4372-be24-1d68703affd7 # ubuntu 14.04.3 LTS
       #image_id: 9ba220c2-7205-484b-bd19-d4af8194d298 # ubuntu 16.04
       #image_id: d4a265a0-6cb7-4b13-be65-08fa77c3c7e5 # CentOS 7 1708 Base 0.3
+      #image_id: 27c91417-c05d-46ae-a15d-8a43052128c2 # CentOS 7 1805
+      image_id: 0e471e83-bd32-4c23-bc36-7b134bbcfa84 # CentOS 7 1805
       #image_id: ba8841b4-a940-4348-8fc0-6b2a2ace437e # CentOS 7 1708 Galaxy_17.05 0.4
       #image_id: f2445c98-e767-4e8e-a9d8-6ad5892f1b4d # CentOS 7 1708 galaxy-epigen_nofix 0.2
       #image_id: 39ca8f91-1f8b-4591-9523-0e5dc74001e9 # CentOS 7 1708 galaxy-rna-workbench_nofix
       #image_id: 9e77e389-b8c8-4427-8603-9385680f45f1 # CentOS 7 1708 galaxy-rna-workbench 0.2
-      instance_type: small #4cpu-4GB-20dsk
+      instance_type: medium #4cpu-4GB-20dsk
       availability_zone: nova
       net_id: fe82ef7b-4bb7-4c1e-b4ec-ec5c1b0c7333 #pub-ip
       #---
-      volume_size: 100
+      volume_size: 50
       volume_mountpoint: /export
       #---
       action: 'RUN'
       # base_image and run_tools_script are also possible values
-      flavor: 'os-storage'
+      flavor: 'galaxy'
       tools_recipe_url: 'https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/tools.yml'
 
 

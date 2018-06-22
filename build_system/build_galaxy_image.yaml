@@ -12,12 +12,13 @@ resources:
       #image_id: d4a265a0-6cb7-4b13-be65-08fa77c3c7e5 # CentOS 7 1708 Base 0.3
       #image_id: ba8841b4-a940-4348-8fc0-6b2a2ace437e # CentOS 7 1708 Galaxy_17.05 0.4
       #image_id: 73814bd9-11f0-464b-8d3b-eeec655b2183 # CentOS 7 1708 galaxy-epigen_nofix 0.4
-      image_id: 3874ec5a-2212-4d37-acd1-fc26a97ee29f # CentOS 7 1708 galaxy-rna-workbench_nofix 0.4
-      instance_type: medium #4cpu-4GB-20dsk
+      #image_id: 3874ec5a-2212-4d37-acd1-fc26a97ee29f # CentOS 7 1708 galaxy-rna-workbench_nofix 0.4
+      image_id: 27c91417-c05d-46ae-a15d-8a43052128c2 # CentOS 7 1805
+      instance_type: small #4cpu-4GB-20dsk
       availability_zone: nova
       net_id: fe82ef7b-4bb7-4c1e-b4ec-ec5c1b0c7333 #pub-ip
       #---
       action: 'BUILD'
       # base_image and run_tools_script are also possible values
-      flavor: 'galaxy-rna-workbench'
+      flavor: 'base_image'
       tools_recipe_url: 'https://raw.githubusercontent.com/mtangaro/GalaxyCloud/master/HEAT/build_system/tools.yml'
