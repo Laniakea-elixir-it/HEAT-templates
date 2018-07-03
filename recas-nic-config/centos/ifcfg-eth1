@@ -1,0 +1,8 @@
+i# Created by cloud-init on instance boot automatically, do not edit.
+#
+BOOTPROTO=dhcp
+DEVICE=eth1
+ONBOOT=yes
+TYPE=Ethernet
+HOTPLUG=yes
+USERCTL=no
