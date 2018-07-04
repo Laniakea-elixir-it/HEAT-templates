@@ -28,7 +28,7 @@ function find_private_nic(){
   fi
 
   # Configure the private IP as static
-  PRIVATE_IFCFC_FILE=/etc/sysconfig/network-scripts/ifcfg-$PRIVATE_IFACE_NAME
+  PRIVATE_IFCFG_FILE=/etc/sysconfig/network-scripts/ifcfg-$PRIVATE_IFACE_NAME
 
   true
 
@@ -59,7 +59,7 @@ function find_public_nic(){
   fi
 
   # Configure the public IP as static
-  PUBLIC_IFCFC_FILE=/etc/sysconfig/network-scripts/ifcfg-$PUBLIC_IFACE_NAME
+  PUBLIC_IFCFG_FILE=/etc/sysconfig/network-scripts/ifcfg-$PUBLIC_IFACE_NAME
 
   true
 
@@ -81,20 +81,20 @@ then
   find_public_nic
 
   # Configure the private IP as static
-  echo 'BOOTPROTO=static' > $PRIVATE_IFCFC_FILE
-  echo 'DEVICE='$PRIVATE_IFACE_NAME >> $PRIVATE_IFCFC_FILE
-  echo 'ONBOOT=yes' >> $PRIVATE_IFCFC_FILE
-  echo 'TYPE=Ethernet' >> $PRIVATE_IFCFC_FILE
-  echo 'USERCTL=no' >> $PRIVATE_IFCFC_FILE
-  echo 'IPADDR='$PRIVATE_IP >> $PRIVATE_IFCFC_FILE
-  echo 'NETMASK=255.255.255.0' >> $PRIVATE_IFCFC_FILE
+  echo 'BOOTPROTO=static' > $PRIVATE_IFCFG_FILE
+  echo 'DEVICE='$PRIVATE_IFACE_NAME >> $PRIVATE_IFCFG_FILE
+  echo 'ONBOOT=yes' >> $PRIVATE_IFCFG_FILE
+  echo 'TYPE=Ethernet' >> $PRIVATE_IFCFG_FILE
+  echo 'USERCTL=no' >> $PRIVATE_IFCFG_FILE
+  echo 'IPADDR='$PRIVATE_IP >> $PRIVATE_IFCFG_FILE
+  echo 'NETMASK=255.255.255.0' >> $PRIVATE_IFCFG_FILE
 
   # Configure the public IP as static
-  echo 'BOOTPROTO=dhcp' > $PUBLIC_IFCFC_FILE
-  echo 'DEVICE='$PUBLIC_IFACE_NAME >> $PUBLIC_IFCFC_FILE
-  echo 'ONBOOT=yes' >> $PUBLIC_IFCFC_FILE
-  echo 'TYPE=Ethernet' >> $PUBLIC_IFCFC_FILE
-  echo 'USERCTL=no' >> $PUBLIC_IFCFC_FILE
+  echo 'BOOTPROTO=dhcp' > $PUBLIC_IFCFG_FILE
+  echo 'DEVICE='$PUBLIC_IFACE_NAME >> $PUBLIC_IFCFG_FILE
+  echo 'ONBOOT=yes' >> $PUBLIC_IFCFG_FILE
+  echo 'TYPE=Ethernet' >> $PUBLIC_IFCFG_FILE
+  echo 'USERCTL=no' >> $PUBLIC_IFCFG_FILE
 
   # Default gateway to be configured
   PUBLIC_GW=$(echo $PUBLIC_IP | awk -F\. '{print $1"."$2"."$3".1"}')
@@ -134,14 +134,14 @@ else
   fi
 
   # Configure the IP as dhcp
-  IFCFC_FILE=/etc/sysconfig/network-scripts/ifcfg-$IFACE_NAME
+  IFCFG_FILE=/etc/sysconfig/network-scripts/ifcfg-$IFACE_NAME
 
   # Configure the private nic as dhcp
-  echo 'BOOTPROTO=dhcp' > $IFCFC_FILE
-  echo 'DEVICE='$IFACE_NAME >> $IFCFC_FILE
-  echo 'ONBOOT=yes' >> $IFCFC_FILE
-  echo 'TYPE=Ethernet' >> $IFCFC_FILE
-  echo 'USERCTL=no' >> $IFCFC_FILE
+  echo 'BOOTPROTO=dhcp' > $IFCFG_FILE
+  echo 'DEVICE='$IFACE_NAME >> $IFCFG_FILE
+  echo 'ONBOOT=yes' >> $IFCFG_FILE
+  echo 'TYPE=Ethernet' >> $IFCFG_FILE
+  echo 'USERCTL=no' >> $IFCFG_FILE
 
   # Remove the remaining unuseful configuration file
   if [[ $IFACE_NAME == 'eth0' ]]; then
