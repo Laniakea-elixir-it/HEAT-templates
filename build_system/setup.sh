@@ -417,6 +417,14 @@ prerequisites
 if [[ $galaxy_flavor == "base_image" ]]; then
   if [[ $action == 'BUILD' ]]; then build_base_image; fi
 
+elif [[ $galaxy_flavor == "update_base_image" ]]; then
+  if [[ $action == 'BUILD' ]]; then
+    # Update the image
+    build_base_image
+    # Stop services if running
+    stop_services
+  fi
+
 elif [[ $galaxy_flavor == "slurm_base_image" ]]; then
   if [[ $action == 'BUILD' ]]; then build_slurm_base_image; fi
 
