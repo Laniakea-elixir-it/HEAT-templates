@@ -17,6 +17,8 @@ REFDATA_BRANCH='master'
 
 role_dir=/tmp/roles
 
+enable_2nic_config=true
+
 #________________________________
 # Start logging
 LOGFILE="/tmp/setup.log"
@@ -439,6 +441,13 @@ fi
 # Clean the environment
 clean_package_manager_cache
 copy_clean_instance_script
+
+# Configure image for 2 nic
+if enable_2nic_config; then
+  wget https://raw.githubusercontent.com/Laniakea-elixir-it/HEAT-templates/master/recas-nic-config/centos/preconfig.sh -O /tmp/preconfig.sh
+  chmod +x /tmp/preconfig.sh
+  /tmp/preconfig.sh
+fi
 
 } &>> $LOGFILE
 
