@@ -427,6 +427,8 @@ elif [[ $galaxy_flavor == "run_tools_script" ]]; then
   if [[ $action == 'RUN' ]]; then start_services; fi
 
 else
+  # Update and prepare image
+  build_base_image
   # Prepare the system: install ansible, ansible roles
   install_ansible
   install_ansible_roles
@@ -443,7 +445,7 @@ clean_package_manager_cache
 copy_clean_instance_script
 
 # Configure image for 2 nic
-if enable_2nic_config; then
+if $enable_2nic_config; then
   wget https://raw.githubusercontent.com/Laniakea-elixir-it/HEAT-templates/master/recas-nic-config/centos/preconfig.sh -O /tmp/preconfig.sh
   chmod +x /tmp/preconfig.sh
   /tmp/preconfig.sh
