@@ -40,9 +40,6 @@ then
   cp $DEFAULT_IFCFG_FILE $IFCFG_FILE_NEW
   sed -i "s/.*DEVICE=$IFACE_NAME.*/DEVICE=$IFACE_NAME_NEW/" $IFCFG_FILE_NEW
 
-  # Enable interfaces
-  ip r
-
   # Edit /etc/cloud/cloud.cfg
   sed -i '/ssh_pwauth:   0/a \network:\n  config: disabled' /etc/cloud/cloud.cfg
   echo 'runcmd:' >> /etc/cloud/cloud.cfg
