@@ -347,17 +347,6 @@ function build_slurm_base_image () {
 }
 
 #________________________________
-function update_image () {
-
-  if [[ $DISTNAME = "ubuntu" ]]; then
-    apt-get -y update
-  else
-    yum update -y
-  fi
-
-}
-
-#________________________________
 function run_tools_script() {
 
   galaxy_config_file=/home/galaxy/galaxy/config/galaxy.ini
@@ -430,8 +419,7 @@ if [[ $galaxy_flavor == "base_image" ]]; then
 
 elif [[ $galaxy_flavor == "update_image" ]]; then
   if [[ $action == 'BUILD' ]]; then
-    # Update the image
-    update_image
+    # The image is updated running prerequisites.
     # Stop services if running
     stop_services
   fi
