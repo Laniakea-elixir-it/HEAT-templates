@@ -4,7 +4,7 @@
   connection: local
   roles:
     - role: indigo-dc.galaxycloud-os
-      os_storage: 'IaaS'
+      os_storage: 'encryption'
       GALAXY_ADMIN_EMAIL: 'ma.tangaro@gmail.com'
       userdata_provider: 'not_a_provider'
       userdata_token: 'not_a_token'
