@@ -32,7 +32,7 @@
   roles:
     - role: indigo-dc.galaxycloud-refdata
       get_refdata: 'true'
-      refdata_dir: '/refdata'
+      refdata_dir: '/cvmfs'
       refdata_repository_name: 'elixir-italy.galaxy.refdata'
       refdata_provider_type: 'cvmfs'
       refdata_provider: 'provider_name'
