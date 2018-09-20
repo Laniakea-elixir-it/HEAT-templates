@@ -7,10 +7,9 @@
       create_galaxy_admin: false
       GALAXY_VERSION: "release_18.05"
       galaxy_instance_key_pub: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDy787GZIVdHW7QV+Wu2q9q5k5CiTOq04ENioVig88IIVGNqi8qiX+3fhZx/w2hhlz6AePrYu8CfVPplCRdSMjP46av53V1M7r0+yqJvuk1PC2f/rSoEL95TvaeiV28+5Wy4MC58UvYuewuhIHcbfPiXHf3NEE3scd38GXCYKLhAP28mUQ950Ar4SoWv4irv21maJwkwqn5AYXcy1yrbBZtaTbQELVPa/E6X9j+k29bn32ITmmtKBA3ne/QlFRaaYI3XggvMXhhSSIYsJUdlSOjUTriB2DraHsxMGfOPjmPXkjvrXp9MfOzjMg10fb7K2Mda8u/ujK/dvx3BnhlSIpn marco@marco-Latitude-3440"
+      create_galaxy_admin: false
       set_pgsql_random_password: false
       set_proftpd_random_password: false
-      galaxy_db_dir: '/home/galaxy/galaxy/database'
-      tool_deps_path: '/home/galaxy/tool_deps'
       require_login: 'False' # disable login option only for galaxy images
 
 - name: Post installation tasks
