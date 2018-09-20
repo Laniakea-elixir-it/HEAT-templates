@@ -11,3 +11,4 @@
       when: galaxy_flavor != 'galaxy-no-tools'
 
     - role: indigo-dc.galaxycloud-tooldeps
+      GALAXY_VERSION: 'release_18.05'
