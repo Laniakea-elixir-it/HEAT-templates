@@ -2,6 +2,19 @@
 - name: Install tools
   hosts: localhost
   connection: local
+
+  pre_tasks:    
+    - name: Set premissions
+      file:
+        path: '{{ item }}'
+        state: directory
+        owner: 'galaxy'
+        group: 'galaxy'
+      with_items:
+        - '/export'
+      become_user: root
+      become_method: sudo
+
   roles:
     - role: indigo-dc.galaxycloud-tools
       galaxy_flavor: 'galaxy-testing'
