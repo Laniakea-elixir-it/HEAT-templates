@@ -27,7 +27,7 @@
       when: ansible_os_family == "Debian"
 
     - name: Copy download script
-      gat_url:
+      get_url:
         url: 'https://raw.githubusercontent.com/indigo-dc/ansible-role-galaxycloud-fastconfig/devel/files/tool_deps_download.py'
         dest: '/tmp/tool_deps_download.py'
 
