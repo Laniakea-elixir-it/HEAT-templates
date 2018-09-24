@@ -1,0 +1,60 @@
+---
+- name: Install tools
+  hosts: localhost
+  connection: local
+
+  pre_tasks:
+
+    # check if pycurl is installed
+    - name: '[EL] Install pycurl'
+      yum:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - python-pycurl
+      become_user: root
+      become_method: sudo
+      when: ansible_os_family == "RedHat"
+
+    - name: '[Ubuntu] Install pycurl'
+      apt:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - python-pycurl
+      become_user: root
+      become_method: sudo
+      when: ansible_os_family == "Debian"
+
+    - name: Copy download script
+      get_url:
+        url: 'https://raw.githubusercontent.com/indigo-dc/ansible-role-galaxycloud-fastconfig/devel/files/tool_deps_download.py'
+        dest: '/tmp/tool_deps_download.py'
+
+    - name: Download and extract tool dependencies
+      command: "/usr/bin/python 
+                /tmp/tool_deps_download.py
+                -i galaxy-rna-workbench_nofix
+                -r release_18.05
+                -t 3
+                -o /export"
+      become_user: root
+      become_method: sudo
+
+    - name: 'Delete tool dependency {{ galaxy_flavor }}.tar.gz'
+      file:
+        path: '/export/galaxy-rna-workbench_nofix.tar.gz'
+        state: absent
+      become_user: root
+      become_method: sudo
+
+  roles:
+    - role: indigo-dc.galaxycloud-tools
+      galaxy_flavor: 'galaxy-rna-workbench'
+      GALAXY_VERSION: 'release_18.05'
+      move_datasets: false
+      create_bootstrap_user: true
+      when: galaxy_flavor != 'galaxy-no-tools'
+
+    - role: indigo-dc.galaxycloud-tooldeps
+      GALAXY_VERSION: 'release_18.05'
