@@ -18,7 +18,7 @@
       galaxy_instance_description: "fastconfig"
       galaxy_instance_key_pub: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDy787GZIVdHW7QV+Wu2q9q5k5CiTOq04ENioVig88IIVGNqi8qiX+3fhZx/w2hhlz6AePrYu8CfVPplCRdSMjP46av53V1M7r0+yqJvuk1PC2f/rSoEL95TvaeiV28+5Wy4MC58UvYuewuhIHcbfPiXHf3NEE3scd38GXCYKLhAP28mUQ950Ar4SoWv4irv21maJwkwqn5AYXcy1yrbBZtaTbQELVPa/E6X9j+k29bn32ITmmtKBA3ne/QlFRaaYI3XggvMXhhSSIYsJUdlSOjUTriB2DraHsxMGfOPjmPXkjvrXp9MfOzjMg10fb7K2Mda8u/ujK/dvx3BnhlSIpn marco@marco-Latitude-3440"
       enable_storage_advanced_options: true
-      galaxy_flavor: "galaxy-GDC_Somatic_Variant"
+      galaxy_flavor: "galaxy-rna-workbench"
       get_refdata: true
 
 - name: Download reference data
