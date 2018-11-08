@@ -34,7 +34,7 @@
       get_refdata: 'true'
       refdata_dir: '/cvmfs'
       refdata_repository_name: 'elixir-italy.galaxy.refdata'
-      refdata_provider_type: 'cvmfs'
+      refdata_provider_type: 'cvmfs_preconfigured'
       refdata_provider: 'provider_name'
       refdata_token: 'access_token'
       refdata_cvmfs_server_url: '90.147.102.186'
