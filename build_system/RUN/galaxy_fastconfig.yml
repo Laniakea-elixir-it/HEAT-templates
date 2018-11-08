@@ -29,6 +29,10 @@
       get_url:
         url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_keys/elixir-italy.galaxy.refdata.pub'
         dest: '/tmp'
+    - name: Get reference data cvmfs configuration for preconfigured repository
+      get_url:
+        url: 'https://raw.githubusercontent.com/indigo-dc/Reference-data-galaxycloud-repository/master/cvmfs_server_config_files/elixir-italy.galaxy.refdata.conf'
+        dest: '/tmp'
   roles:
     - role: indigo-dc.galaxycloud-refdata
       get_refdata: 'true'
