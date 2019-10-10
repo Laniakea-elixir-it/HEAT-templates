@@ -21,6 +21,3 @@
       move_datasets: false
       create_bootstrap_user: true
       when: galaxy_flavor != 'galaxy-no-tools'
-
-    #- role: indigo-dc.galaxycloud-tooldeps
-    #  GALAXY_VERSION: 'release_18.05'
